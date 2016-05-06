@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if current_user.is_authenticated %}
+  	<h2>Your Communities : </h2>    
+    <br>
+    {% for comm in commList %}
+        <div class="panel panel-default">                        
+          <div class="panel-body">
+            <div class="media media-clearfix-xs-min">
+              <div class="media-left">
+                <a href="lesson.html">
+                  <span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span>
+                </a>
+              </div>
+              <div class="media-body">
+                <h3 class="media-heading h4"><a href="{{ url_for('display_community', commID=comm.id) }}">{{ comm.commName }}</a></h3>
+                <p class="small text-muted">
+                  <!-- <i class="fa fa-clock-o fa-fw"></i> time since post -->
+                  <i class="fa fa-calendar fa-fw"></i> {{comm.date}}                                        
+                  Users : {{comm.numberUsers}}
+                  Entries : {{comm.numberDocs}}
+                </p>
+                {% for tag in comm.tags %}
+                    <span class="label label-default">{{tag}}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+  	{% else %}
+    	<li><em>You have no communities.</em>
+  	{% endfor %}
+
+  {% endif %}  
+  
+{% endblock %}

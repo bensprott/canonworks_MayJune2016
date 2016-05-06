@@ -1,0 +1,22 @@
+Dear {{user.user_name}},
+
+To change your email address, you to confirm your new address.  To do this, please click the link below.
+
+
+
+{{url_for('change_email_address', token=token,_external=True)}}
+
+
+Your sincerely,
+
+
+
+              The Canonworks Admin
+
+              
+              
+              
+Please don't respond to this email as the address is not monitored.
+
+
+

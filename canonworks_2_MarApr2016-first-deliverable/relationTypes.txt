@@ -1,0 +1,50 @@
+    agrees with
+    cites
+    cites as authority
+    cites as data source
+    cites as evidence
+    cites as metadata document
+    cites as potential solution
+    cites as recommended reading
+    cites as related
+    cites as source document
+    cies for information
+    compiles
+    confirms
+    contains assertion from
+    corrects
+    credits
+    crtiques
+    derides
+    describes
+    disagrees with
+    discusses
+    disputes
+    documents
+    extends
+    parodies
+    plagiarizes
+    qualifies
+    replies to
+    refutes
+    retracts
+    reviews    
+    ridicules
+    speculates on
+    supports 
+    updates      
+    gives background to
+    gives support to  
+    provides assertion for
+    provides conclusions for
+    provides data for
+    uses conclusions from
+    uses data from
+    uses method in
+    has reply from
+    includes exerpt from
+    includes quotation from
+    is agreed with by'
+    is cited as ...see cites as above for full list
+    is ____ by ...see list above for (ex is complied by, is confirmed by)
+    

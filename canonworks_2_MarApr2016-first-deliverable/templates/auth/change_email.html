@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block body %}
+  <h2>Change Email : </h2>
+  <p>
+  <p>
+  <dd>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  {{wtf.quick_form(form)}}
+
+{% endblock %}

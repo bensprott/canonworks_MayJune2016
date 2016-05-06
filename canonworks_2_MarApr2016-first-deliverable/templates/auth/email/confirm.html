@@ -1,0 +1,17 @@
+<!-- Email confirmation which is sent to a user -->
+
+<p>Dear {{user.user_name}},
+
+<p>Welcome to The Canonworks!
+
+<p>Right now, we need you to confirm your email address.  Please click the link below.
+<p>
+<p>
+{{url_for('confirm', token=token,_external=True)}}
+<p>
+<p>We hope your experience here will be very fulfilling.  Please do not hesitate to start reading entries about your favourite subjects and remember to respond to as many entries as you can.  You will soon be building rich communities surrounding your favourite subjects.
+
+<p>If you would like to help build communities, consider comparing entries and voting on their relationship.  This is how communities are born and grow on The Canonworks.
+
+<p>Please don't respond to this email as the address is not monitored.
+

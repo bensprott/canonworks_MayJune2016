@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if current_user.is_authenticated %}
+  	<h2>Your Responses : </h2>    
+    <br>
+    {% for resp in responses %}
+        <li><h2><a href="{{url_for('response_page', src_out = resp.srcOutID)}}" >{{ resp.out_title }}</a></h2>            
+            <br>Your Entry Title : {{resp.src_title}}
+            <br>Tags : {{resp.tags}}
+            <br>User who responded : {{resp.responder}}
+            <br>Date confirmed : {{resp.date}}
+        <p>
+  	{% else %}
+    	<li><em>You have no responses.</em>
+  	{% endfor %}
+
+  {% endif %}  
+  
+{% endblock %}

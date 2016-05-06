@@ -1,0 +1,371 @@
+{% extends "layout.html" %}
+
+{% block scripts %}
+    {{super()}}
+    {{pagedown.include_pagedown()}}
+{% endblock %}
+{% import "bootstrap/wtf.html" as wtf %} 
+          {% block searchNavigate %}
+          <nav class="navbar navbar-subnav navbar-static-top margin-bottom-none" role="navigation">
+            <div class="container-fluid">
+
+                    
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#subnav">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="fa fa-ellipsis-h"></span>
+                    </button>
+                  </div>
+
+
+                
+                  <!-- Collect the nav links, forms, and other content for toggling -->
+                  <div class="collapse navbar-collapse" id="subnav">
+                    <div class="col-lg-4 search hidden-xs hidden-sm col-md-3 top-sixteen">
+                        <div class="wrap">
+                            <form action="{{ url_for('filter_entries') }}" method="post" class="form">
+                                <div class="pull-left txt"><input type="text" class="form-control" placeholder="Search Topics" id="user_entered_filter_tags" name=tags></div>
+                                <div class="pull-right"><button class="btn btn-default" type="submit" id="filter_entries_button"><i class="fa fa-search"></i></button></div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                    {% if current_user.is_authenticated %}  
+                        <div class="stnt pull-left">                            
+                            <form action="{{url_for('create_entry')}}" method="post" class="form">
+                                <button class="btn btn-primary top-sixteen margin-right-ten">Start New Topic</button>
+                            </form>
+
+                        </div>
+                        <ul class="nav navbar-nav ">
+                          <li class="active"><a href="index.html"><i class="fa fa-fw icon-ship-wheel"></i> Timeline</a></li>
+                          <li><a href="user-public-profile.html"><i class="fa fa-fw icon-user-1"></i> About</a></li>
+                          <li><a href="user-public-users.html"><i class="fa fa-fw fa-users"></i> Communities</a></li>
+                        </ul>                   
+                        
+                        <ul class="nav navbar-nav hidden-xs navbar-right ">
+                          <li><a href="#" data-toggle="chat-box">Chat <i class="fa fa-fw fa-comment-o"></i></a></li>
+                        </ul>
+                    {% endif %}                    
+                  </div>
+
+              <!-- /.navbar-collapse -->
+            </div>
+          
+          </nav>
+          {% endblock %}
+
+       {% block about %}
+           <div class="category">About</div>
+            <div class="sidebar-block">
+              <ul class="list-about">
+                <li><i class="fa fa-map-marker"></i> Ottawa, ON</li>
+                           <li><i class="fa fa-link"></i> <a href="#">thecanonworks.com</a></li>
+                <li><i class="fa fa-twitter"></i> <a href="#">/Thecanonworks</a></li>
+              </ul>
+            </div>
+            
+            <div class="category">Activity</div>
+            <div class="sidebar-block">
+              <ul class="sidebar-feed">
+                <li class="media">
+                  <div class="media-left">
+                    <span class="media-object">
+                                <i class="fa fa-fw fa-bell"></i>
+                            </span>
+                  </div>
+                  <div class="media-body">
+                    <a href="" class="text-white">Ben</a> just logged in
+                    <span class="time">2 min ago</span>
+                  </div>
+                  <div class="media-right">
+                    <span class="news-item-success"><i class="fa fa-circle"></i></span>
+                  </div>
+                </li>
+                <li class="media">
+
+                  <div class="media-left">
+                    <span class="media-object">
+                                <i class="fa fa-fw fa-bell"></i>
+                            </span>
+                  </div>
+                  <div class="media-body">
+                    <a href="" class="text-white">Ben</a> just added <a href="" class="text-white">canonworks</a> as their office
+                    <span class="time">2 min ago</span>
+                  </div>
+                  <div class="media-right">
+                    <span class="news-item-success"><i class="fa fa-circle"></i></span>
+                  </div>
+                </li>
+                <li class="media">
+                  <div class="media-left">
+                    <span class="media-object">
+                                <i class="fa fa-fw fa-bell"></i>
+                            </span>
+                  </div>
+                  <div class="media-body">
+                    <a href="" class="text-white">Ben</a> just logged in
+                    <span class="time">2 min ago</span>
+                  </div>
+                </li>
+                <li class="media">
+                  <div class="media-left">
+                    <span class="media-object">
+                                <i class="fa fa-fw fa-bell"></i>
+                            </span>
+                  </div>
+                  <div class="media-body">
+                    <a href="" class="text-white">Ben</a> just logged in
+                    <span class="time">2 min ago</span>
+                  </div>
+                </li>
+                <li class="media">
+                  <div class="media-left">
+                    <span class="media-object">
+                                <i class="fa fa-fw fa-bell"></i>
+                            </span>
+                  </div>
+                  <div class="media-body">
+                    <a href="" class="text-white">Ben</a> just logged in
+                    <span class="time">2 min ago</span>
+                  </div>
+                </li>
+              </ul>
+           </div>
+        {% endblock %}  
+
+         
+        {% block body %}
+
+            <div class="container">
+            <div class="v-spacer2"></div>
+            <div class="flashes">
+              {% for message in get_flashed_messages() %}
+                  <div style="width: 90% !important;" class="alert alert-success">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      {{ message }}
+                  </div>
+
+              {% endfor %}
+            </div>
+                <div class="v-spacer2"></div>
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <!-- POST -->
+                        {% for entry in entries %}
+                            <div class="panel panel-default">                        
+                              <div class="panel-body">
+                                <div class="media media-clearfix-xs-min">
+                                  <div class="media-left">
+                                    <a href="lesson.html">
+                                      <span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span>
+                                    </a>
+                                  </div>
+                                  <div class="media-body">
+                                    <h3 class="media-heading h4">
+                                        <a href="{{ url_for('write_response', id=entry.id) }}">{{ entry.title }}</a>
+                                        {%  if current_user.is_authenticated %}
+                                            {%  if current_user.role.name == "Moderator" or current_user.role.name == "Administrator" or current_user.role.name == "SiteOwner" %}
+                                                <span class="pull-right"><a class="btn btn-danger" href="{{ url_for('delete_entry', id=entry.id) }}"><i class="fa fa-trash"></i> Delete Entry</a></span>
+                                            {% endif %}
+                                        {% endif %}
+
+                                    </h3>
+
+
+
+
+
+{#                                    <a href="#" data-toggle="modal"  data-target=#{{"popup-link-" + entry.id|string}}>Explore</a>#}
+    <a href=""  class={{"popup-link-" + entry.id|string}}>Explore</a>
+                                    <div class="popup-box" id={{"popup-box-" + entry.id|string}}>
+                                        <div class="close">X</div>
+                                        <div id="{{'inputCarousel' + entry.id|string}}" class="carousel slide" data-interval="false"> <!-- slider -->
+                                            <div class="carousel-inner">
+                                                {% if entry.inputs|length == 0 %}
+                                                    <div class="active item"> <!-- item 1 -->
+                                                        <div class="carousel-source-entry">
+                                                           <div class="text-center no-source-entries"> <h3>No Source Entries!</h3> </div>
+                                                        </div>
+                                                    </div> <!-- end item -->
+                                                {% else %}
+                                                    <h2 class="valid-entries-h2"><i class="fa fa-book"></i> Source Entries:</h2>
+                                                    <p>
+                                                    {% for input in entry.inputs %}
+                                                        {% if loop.index == 1 %}
+                                                            <div class="active item"> <!-- item 1 -->
+                                                        {% else %}
+                                                            <div class="item"> <!-- item 1 -->
+                                                        {% endif %}
+                                                            <div class="carousel-source-entry">
+                                                                <div class="panel panel-default">
+                                                                  <div class="panel-body">
+                                                                    <div class="media media-clearfix-xs-min">
+                                                                      <div class="media-left">
+                                                                        <a href="lesson.html">
+                                                                          <span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span>
+                                                                        </a>
+                                                                      </div>
+                                                                      <div class="media-body">
+                                                                        <h3 class="media-heading h4"><a href="{{ url_for('write_response', id=input.id) }}">{{ input.title }}</a></h3>
+                                                                        <p class="small text-muted">
+                                                                          <!-- <i class="fa fa-clock-o fa-fw"></i> time since post -->
+                                                                          <i class="fa fa-user fa-fw"></i> <a href="{{ url_for('public_user_page', userID=entry.userID) }}">{{input.user_name}}</a>
+                                                                          <i class="fa fa-calendar fa-fw"></i> {{input.date_posted}}
+                                                                        </p>
+                                                                        {% for tag in input.tagList %}
+                                                                            <span class="label label-default">{{tag}}</span>
+                                                                        {% endfor %}
+                                                                        <p>
+                                                                        {% if current_user.id != input.userID and current_user.id != entry.userID%}
+                                                                            <div class="carousel-compare-entry-link">
+                                                                                <h3><a href="{{ url_for('compare_these_articles', srcTrgtID=input.srcTargID) }}">Compare these Entries</a></h3>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                        </div> <!-- end item -->
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div> <!-- end carousel inner -->
+                                            <a class="{{'carousel-control input left ' + entry.id|string}}" data-slide="prev">&lsaquo;</a>
+                                            <a class="{{'carousel-control input right ' + entry.id|string}}" data-slide="next">&rsaquo;</a>
+                                            <script>
+                                                $("{{'.inputCarousel' + entry.id|string}}").carousel({
+                                                })
+                                                $("{{'.carousel-control.input.left.' + entry.id|string}}").click(function() {
+                                                  $("{{'#inputCarousel' + entry.id|string}}").carousel('prev');
+                                                });
+                                                $("{{'.carousel-control.input.right.' + entry.id|string}}").click(function() {
+                                                  $("{{'#inputCarousel' + entry.id|string}}").carousel('next');
+                                                });
+                                            </script>
+                                        </div> <!-- end slider -->
+                                        
+                                        <div class="bottom">
+                                            <div id="response-original response-original-fix">
+                                                <h1 class="response-header"><i class="fa fa-tag"></i> {{entry.title}}</h1>
+                                                <div id="response-original-text">
+                                                    <p> {{entry.body_html | safe}}
+                                                </div>
+                                            <div class="response-bottom-info">
+                                                <p class="small text-muted">
+                                                    <!-- <i class="fa fa-clock-o fa-fw"></i> time since post -->
+                                                    <i class="fa fa-user fa-fw"></i> <a href="{{ url_for('public_user_page', userID=entry.userID) }}">{{entry.user_name}}</a>
+                                                    <i class="fa fa-calendar fa-fw"></i> {{entry.date_posted}}                                
+                                                </p>
+                                                <p>
+                                                <div id="saveToLibButtonHiddednID">
+                                                    <input type="hidden" value={{entry.id}} id="original_post_id">
+                                                </div>
+                                                <p id="SaveToLibResponse"></p>
+                                                <button class="btn btn-primary" id="saveToLibButton">Save Entry to Library</button>
+                                                </p>
+                                                {% for tag in entry.tagList %}
+                                                    <span class="label label-default">{{tag}}</span>
+                                                {% endfor %}
+                                            </div>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div id="{{'outputCarousel' + entry.id|string}}" class="carousel slide" data-interval="false"> <!-- slider -->
+                                            <div class="carousel-inner">
+                                                {% if entry.outputs|length == 0 %}
+                                                    <div class="active item"> <!-- item 1 -->
+                                                        <div class="carousel-source-entry">
+                                                            <h3 class="text-center no-citation-entries">No Entries Cite This Entry.</h3>
+                                                        </div>
+                                                    </div> <!-- end item -->
+                                                {% else %}
+                                                    <h2 class="valid-entries-h2"><i class="fa fa-book"></i> Output Entries:</h2>
+                                                    <p>
+                                                    {% for output in entry.outputs %}
+                                                        {% if loop.index == 1 %}                                                        
+                                                            <div class="active item"> <!-- item 1 -->
+                                                        {% else %}
+                                                            <div class="item"> <!-- item 1 -->   
+                                                        {% endif %}
+                                                            <div class="carousel-source-entry">
+                                                                <div class="panel panel-default">                        
+                                                                  <div class="panel-body">
+                                                                    <div class="media media-clearfix-xs-min">
+                                                                      <div class="media-left">
+                                                                        <a href="lesson.html">
+                                                                          <span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span>
+                                                                        </a>
+                                                                      </div>
+                                                                      <div class="media-body">
+                                                                        <h3 class="media-heading h4"><a href="{{ url_for('write_response', id=output.id) }}">{{ output.title }}</a></h3>
+                                                                        <p class="small text-muted">
+                                                                          <!-- <i class="fa fa-clock-o fa-fw"></i> time since post -->
+                                                                          <i class="fa fa-user fa-fw"></i> <a href="{{ url_for('public_user_page', userID=entry.userID) }}">{{output.user_name}}</a>
+                                                                          <i class="fa fa-calendar fa-fw"></i> {{output.date_posted}}                                
+                                                                        </p>
+                                                                        {% for tag in output.tagList %}
+                                                                            <span class="label label-default">{{tag}}</span>
+                                                                        {% endfor %}
+                                                                      </div>
+                                                                                                                                  {% if current_user.id != output.userID and current_user.id != entry.userID%}
+                                                                <div class="carousel-compare-entry-link">
+                                                                    <h3><a href="{{ url_for('compare_these_articles', srcTrgtID=output.srcTargID) }}">Compare these Entries</a></h3>
+                                                                </div>
+                                                            {% endif %}
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                        </div> <!-- end item -->
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div> <!-- end carousel inner -->
+                                            <a class="{{'carousel-control output left ' + entry.id|string}}" data-slide="prev">&lsaquo;</a>
+                                            <a class="{{'carousel-control output right ' + entry.id|string}}" data-slide="next">&rsaquo;</a>                                        
+                                            <script>
+                                                $("{{'.outputCarousel' + entry.id|string}}").carousel({
+                                                })                                                
+                                                $("{{'.carousel-control.output.left.' + entry.id|string}}").click(function() {
+                                                  $("{{'#outputCarousel' + entry.id|string}}").carousel('prev');
+                                                });
+                                                $("{{'.carousel-control.output.right.' + entry.id|string}}").click(function() {
+                                                  $("{{'#outputCarousel' + entry.id|string}}").carousel('next');
+                                                });
+                                            </script>
+                                        </div> <!-- end slider -->  
+                                        
+                                        
+                                        
+                                        
+                                    </div> 
+                                    
+                                                                
+                                    <p class="small text-muted">
+                                      <!-- <i class="fa fa-clock-o fa-fw"></i> time since post -->
+                                      <i class="fa fa-user fa-fw"></i> <a href="{{ url_for('public_user_page', userID=entry.userID) }}">{{entry.user_name}}</a>
+                                      <i class="fa fa-calendar fa-fw"></i> {{entry.date_posted}}                                
+                                    </p>
+                                    {% for tag in entry.tagList %}
+                                        <span class="label label-default">{{tag}}</span>
+                                    {% endfor %}
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        {% else %}
+                            <h1><em>No entries!</em></h1>
+                        {% endfor %} 
+                       
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="pagination index-pagination">
+                {{macros.pagination_widget(pagination, '.index')}}
+            </div>
+        {% endblock %}             

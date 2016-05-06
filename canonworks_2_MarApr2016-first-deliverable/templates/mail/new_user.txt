@@ -1,0 +1,17 @@
+<!--This is an email form for html of sending emails to the admin when a new user registers -->
+
+Dear Canonworks Administrator,
+
+We have a new user!  Here is his information :
+
+Username : {{user.user_name}}
+Email : {{user.user_email}}
+Database ID (a proxy to how many people have registered) : {{user.id}}
+
+Please welcome him :)
+
+Yours sincerely,
+
+
+                   The Canonworks
+

@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+
+{% block scripts %}
+    {{super()}}
+    {{pagedown.include_pagedown()}}
+{% endblock %}
+{% import "bootstrap/wtf.html" as wtf %}          
+{% block about %}
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+    <h4 class="category">Account</h4>
+    <ul class="sidebar-menu">
+      <li class="active"><a href="user-private-profile.html"><i class="icon-user-1"></i> <span>Edit Profile</span></a></li>
+      <li><a href="user-private-users.html"><i class="fa fa-group"></i> <span>Communities</span></a></li>
+      <li><a href="user-private-messages.html"><i class="icon-comment-fill-1"></i> <span>Messages</span></a></li>
+      <li><a href="login.html"><i class="icon-unlock-fill"></i> <span>Logout</span></a></li>
+    </ul>
+{% endblock %}
+{% block body %}
+
+          <div class="container-fluid">
+
+            <div class="tabbable">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab"><i class="fa fa-fw fa-folder"></i> My Topics</a></li>
+                <li class=""><a href="#profile" data-toggle="tab"><i class="fa fa-fw fa-folder"></i> About Me</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+                    {% for tag in user.tags %}
+                        <span class="label label-default">{{tag}}</span>
+                    {% endfor %}
+                </div>
+                <div class="tab-pane fade" id="profile">
+                  <p>{{user.bio}}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading panel-heading-gray">
+                    <a href="#" class="btn btn-white btn-xs pull-right"><i class="fa fa-pencil"></i></a>
+                    <i class="fa fa-fw fa-info-circle"></i> About
+                  </div>
+                  <div class="panel-body">
+                    <ul class="list-unstyled profile-about margin-none">
+                        <li class="padding-v-5">
+                            <div class="row">
+                              <div class="col-sm-4"><span class="text-muted">User Name</span></div>
+                              <div class="col-sm-8">{{user.name}}</div>
+                            </div>
+                        </li>
+                        <li class="padding-v-5">
+                            <div class="row">
+                              <div class="col-sm-4"><span class="text-muted">Email</span></div>
+                              <div class="col-sm-8">{{user.email}}</div>
+                            </div>
+                        </li>
+                        <li class="padding-v-5">
+                            <div class="row">
+                              <div class="col-sm-4"><span class="text-muted">Date Joined</span></div>
+                              <div class="col-sm-8">{{user.date_joined}}</div>
+                            </div>
+                        </li>
+                        <li class="padding-v-5">
+                            <div class="row">
+                              <div class="col-sm-4"><span class="text-muted">Birth Date</span></div>
+                              <div class="col-sm-8">{{user.date_of_birth}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading panel-heading-gray">
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-primary btn-xs">Add <i class="fa fa-plus"></i></a>
+                    </div>
+                    <i class="icon-user-1"></i> Friends
+                  </div>
+                  <div class="panel-body">
+                    <ul class="img-grid">
+                      <li>
+                        <a href="#">
+                          <img src="images/people/110/guy-6.jpg" alt="image" />
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <img src="images/people/110/woman-3.jpg" alt="image" />
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <img src="images/people/110/guy-2.jpg" alt="image" />
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <img src="images/people/110/guy-9.jpg" alt="image" />
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <img src="images/people/110/woman-9.jpg" alt="image" />
+                        </a>
+                      </li>
+                      <li class="clearfix">
+                        <a href="#">
+                          <img src="images/people/110/guy-4.jpg" alt="image" />
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <img src="images/people/110/guy-1.jpg" alt="image" />
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <img src="images/people/110/woman-4.jpg" alt="image" />
+                        </a>
+                      </li>
+                      
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading panel-heading-gray">
+                <i class="fa fa-bookmark"></i> Bookmarks
+              </div>
+                <div class="panel-body">
+                    <div class="row">
+                        {% for libEntry in user.library%}
+                          <!-- start a library entry -->
+                          <div class="col-md-4">
+                            <div class="panel panel-default">
+                              <div class="panel-body">
+                                <a href="#" class="h5 margin-none">{{libEntry.title}}</a>
+                                <div class="text-muted">
+                                  <small><i class="fa fa-calendar"></i> {{libEntry.date_posted}}</small>
+                                </div>
+                              </div>
+                              <div class="panel-body">                            
+                                <div>
+                                  <div class="pull-right">
+                                    <a href="#" class="btn btn-primary btn-xs">explore</a>
+                                  </div>
+                                </div>
+                              </div>                      
+                            </div>                    
+                          </div> <!-- end a library entry -->
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+          </div>
+
+
+        
+        
+{% endblock %}   

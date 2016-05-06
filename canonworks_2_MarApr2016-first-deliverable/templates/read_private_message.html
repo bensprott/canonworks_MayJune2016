@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block scripts %}
+    {{super()}}
+    {{pagedown.include_pagedown()}}
+{% endblock %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block body %}
+    {% if current_user.is_authenticated %}
+        {% if permissions_met %}
+            <form method="post" role="form">
+                {{ form.hidden_tag() }}
+                {{ wtf.form_errors(form, hiddens="only") }}
+                {{ wtf.form_field(form.title) }}
+                {{ wtf.form_field(form.text) }}
+                {{ form.srcLibEntries }}
+                {{ wtf.form_field(form.submit) }}
+            </form>
+        {% else %}
+            It looks like this user is blocked.  You cannot communicate with them.
+        {% endif %}
+    
+        <div class = "library-articles" id="menuleftcontent">  
+                <div id="savedLibArticles">
+                </div>
+                <h3>Your Library and Your Entries:</h3>
+                Add any entries that you would like to share!
+                <dd><input type = text size=30 id = "libFilterTags">  <input type=submit value="Filter on Tags" id = "libTagFilterButton">  
+                <br>
+                <div id = "libArticlesList">
+                {% for entry in userLib %}
+                    <br>
+                    <b><input type="checkbox" name = "libArticle" value = {{entry.id}}>                    
+                    <a href="{{ url_for('write_response', id=entry.id) }}">{{ entry.title }}</a></b><br />
+                    {{entry.text[:50]|safe}} ...
+                    <br>
+                    Tags : {{entry.tags|safe}}
+                    <br>
+                {% else %}
+                    <li><em>No entries in your library!</em>
+                {% endfor %}
+                </div>
+        </div>
+        <p>
+        {%if replyChain|length != 0%}
+            Reply History :
+        {%endif %}
+        {% for reply in replyChain%}
+            {% if reply.sender_id != current_user.id%}  
+                <div class="media">
+                    <div class="media-left">
+                        <a href="{{ url_for('public_user_page', userID=reply.sender_id) }}">
+                          <img src="{{ url_for('static', filename='images/people/guy-3.jpg') }}" width="60" alt="woman" class="media-object" />
+                        </a>
+                    </div>            
+                    <div class="media-body message">
+                        <div class="panel panel-default">
+                          <div class="panel-heading panel-heading-white">
+                            <a href="{{ url_for('read_private_message', message_id = reply.message_id) }}">{{reply.title}}</a>
+                            <p>
+                            <div class="pull-right">
+                              <small class="text-muted"> {{reply.date_sent}}</small>
+                            </div>
+                            <a href="{{ url_for('public_user_page', userID=reply.sender_id) }}">{{reply.sender_name}}</a>
+                          </div>
+                          <div class="panel-body">
+                            {{reply.text | safe}}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="media-body message">
+                    <div class="panel panel-default">
+                      <div class="panel-heading panel-heading-white">
+                        <div class="pull-right">
+                          <small class="text-muted">{{reply.date_sent}}</small>
+                        </div>
+                        <a href="{{ url_for('public_user_page', userID=reply.sender_id) }}">{{reply.sender_name}} (Me)</a>
+                      </div>
+                      <div class="panel-body">
+                        {{reply.text | safe}}
+                      </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}        
+{% endblock %}
+

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block scripts %}
+    {{super()}}
+    {{pagedown.include_pagedown()}}
+{% endblock %}
+{% import "bootstrap/wtf.html" as wtf %}          
+{% block body %}
+    {% for entry in entries %}
+        <div class="panel panel-default">                        
+          <div class="panel-body">
+            <div class="media media-clearfix-xs-min">
+              <div class="media-left">
+                <a href="lesson.html">
+                  <span class="media-object icon-block bg-default"><i class="fa fa-github"></i></span>
+                </a>
+              </div>
+              <div class="media-body">
+                <h3 class="media-heading h4"><a href="{{ url_for('write_response', id=entry.id) }}">{{ entry.title }}</a></h3>
+                <p class="small text-muted">
+                  <!-- <i class="fa fa-clock-o fa-fw"></i> time since post -->
+                  <i class="fa fa-user fa-fw"></i> <a href="{{ url_for('public_user_page', userID=entry.userID) }}">{{entry.user_name}}</a>
+                  <i class="fa fa-calendar fa-fw"></i> {{entry.date_posted}}                                
+                </p>
+                {% for tag in entry.tagList %}
+                    <span class="label label-default">{{tag}}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+    {% else %}
+        <h1><em>No entries!</em></h1>
+    {% endfor %} 
+{% endblock %}             

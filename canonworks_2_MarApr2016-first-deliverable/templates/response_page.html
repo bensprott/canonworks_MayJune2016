@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if current_user.is_authenticated %}
+    <div id="stack-vert">
+        <div id="stack-horz">
+            <div id="response_page_content">
+                <div id="sourceArticle"><a href="{{ url_for('write_response', id=respPageData.source_art.id) }}">A: {{respPageData.source_art.title}}</a></b><br />
+                <p>{{respPageData.source_art.text}}
+                <p>Posted : {{respPageData.source_art.date_posted.strftime('%Y-%m-%d')}}
+                </div>
+                <div id="targetArticle"><a href="{{ url_for('write_response', id=respPageData.target_art.id) }}">B: {{respPageData.target_art.title}}</a></b><br />
+                <p>{{respPageData.source_art.text}}
+                <p>Posted : {{respPageData.target_art.date_posted.strftime('%Y-%m-%d')}}
+                </div>            
+            </div>
+            <div id="response_page_details">
+                <div>
+                    <h3>Members :</h3>
+                    <ul id="menu">
+                        {% for member in respPageData.users %}
+                            <li>{{ member }}</li>                
+                        {% endfor %}
+                    </ul>
+                    <b>Date Confirmed : </b>{{respPageData.dateConfirmed}}
+                    <br>
+                    <b>Relationship between articles:</b>
+                        <br>
+                        {% if not respPageData.isReversed %}
+                            Entry A {{respPageData.relationType}} Entry B
+                        {% else %}
+                            Entry B {{respPageData.relationType}} Entry A
+                        {% endif %}
+                    <br>
+                    <b>Tags : </b>
+                    <br>
+                    {{respPageData.tags}}
+                </div>
+            </div>
+        </div>
+    </div>
+  {% endif %}      
+{% endblock %}

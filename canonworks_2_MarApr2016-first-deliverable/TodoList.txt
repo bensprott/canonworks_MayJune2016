@@ -1,0 +1,134 @@
+1.  have every response display with a link to the article it is responding to.  SO if people want to know 
+	 what this is a response to, they can click it. (Actually, articles can respond to many other entries.  
+     This is more like, how do we show all the communities or articles that a particular entry is related to.  This
+     is related to the visualization of a community.)
+2.  Have every article display with a link that will display all responses.  (this is subsumed in 1.)
+
+
+x3.  Implement multiple inheritance.
+
+    Working on this as of NOvember 23rd
+        
+        1.Currntly not getting the id of the new article and pointing the original id into the new article.
+            This is a huge flaw!!!  We are currently pointint all the saved library articles to the article to 
+            which we are writing a response.
+            
+            have to fix the following:
+            -def add_entry()
+            -save_response
+
+
+x4.  Implement tags.
+x5.  Implement filter on tags.
+6.  Change all the code that selects articles by user name when you really mean the user id.
+bugs7.  Users can't compare articles when one of them or both belong to that user.
+bugs8.  A user can only compare a pair of articles once.
+
+x9.  On a user profile, you should list all the articles written by that user.
+
+10.  Implement a way  to isolate links in an entry so that they can be parsed just like any two related entries:
+    For instance, John writes an article and copies a link into the article.  This link should get its own entry in the database
+    and users should be asked to qualify the relationship between John's article and the link which he copied into his entry. (this is related
+    to adding tiny mce to our page.  Links can be added through that interface and we have to assume the package can be modified to do special things
+    when someone adds a link.)
+    
+x11. Fix create response so that source to output relation is pointing between the library article and the new article, not between the
+    library article and the original article id.
+
+x12. add a filter on tags for library
+
+13.  When creating a response, ask if you would like to apply all the tags of all jnput articles to the new article.
+
+14.  Ensure that when saving a respose an article cannot be an input to itself (say by saving the article to library and then
+    clicking it to indicate that it is an input).  ((For now, just be happy in the fact that there is a relation where A says the same
+    thing as B, so, that is taken care of.))
+    
+x15.  Allow users to input their own articles to a new entry or response entry.  This means adding their own articles to the library articles.
+
+16.  Change tags to include the user who applied the tag.  Then, we can filter on tags which were applied by the author or by other users. (maybe by adding a 
+        radio button that says, filter tags to exclude viewer applied tags)
+
+x17.  Create a top of the page link that shows a user all the entries that they themselves have written. (I put this link in the user's profile page.)
+
+18.  If a user is responding to article x, then they should not be shown article x in their library list of things to point into the response.  Otherwise, they
+    would have the same article pointing in twice. ((once again, all that will happen is people will be asked to say that article A says the same thing as article B))
+    
+x19.  Don't allow a user to save an article they wrote to their library.  Instead tell them they wrote that article and that it is listed in their
+    written work.
+    
+x20.  Build in these relation types.
+
+21.  Add a hover mouse over message for the relation types, explaining what each is intended to be.
+
+22.  When an article has input articles, they should be displayed when showing the article.  This is related to how we should browse the articles, how should
+    we display articles.
+    
+23.  ARticles should show the date of their posting when they are displayed.
+
+24.  Decide if the link to the users library should be at the top banner or  in the user's profile.
+    
+25. Add filter on tags for a users's entries.  LIke, when a user looks in his profile, he can see his entries.  This creates a page that lists a user's entries.
+    that list of user's entries needs the be filterable by keyword.
+    
+26.  If a user attempts to save an entry with no tags, stop them and suggest that they add tags describing their work.
+
+27.  Attempt to implement an autocorrect in tag filtering so that we eliminate the tag problem of mispelling.
+    
+28.  Test source and output on Entries objects and SourceToOutputRelation class to see that sources and outputs make sense.
+
+29. Ensure that no clear relation is not a valid confirmed relation type (ie, when it is selcted, it does not get saved as a confirmed type.).  Also, people will
+    generally just close a window when there is no clear relation, so perhpas we can implement a freshness to new responses so that if enough people look at them
+    but then close them, we remove that relation from being compared.
+
+30. Implement community tags
+
+31.  Implement UTC time.
+
+32.  Sort updates on the updates page by date.
+
+33.  When people respond to themselves, and it is a successful response, try to convey this to the user (namely that they have responded to themselves...like in the updates
+    and elsewhere.)
+    
+34.  Definitely change the user's responnses links to the responses to include both their article and the new response.  This also has to do with seeing the response history, and visualization
+    of response networks.
+    
+35. Put a filter on communities and on responses pages.
+
+36.  Change the Permissions MODERATE COMMENTS to just MODERATOR
+
+37.  We need a form to check that entries have titles and tags and so forth.  Otherwise we get Entries that have no tittle and cannot be  clicked etc.
+
+38.  If an entry joins two communities, then we want to think about merging communities if that makes sense.  This is done in function "createOrUpdateCommunity".
+    we don't want to join communities if it doesn't make sense.  We need a criteria for joining communities.  We could create a third community that includes
+    the two original commmunities and join them that way.
+    
+39.  Implement drafts, such that, if any one, anywhere is crafting a message, it is saved and can be returned to with all the information.  This draft
+    should be saved after even the first letter and after any change.
+    
+40.  Add code so that when people click links in their library there is text added to the text input box and this is like a placeholder to refer to the
+    input links.  This applies to private messages and to new responses.  For each, there is a list of references at the bottom of an entry giving the 
+    ipnut entries. and this is on top of links in the body that refer to the links.
+    
+41.  Go over all the routes that require a member to be apart of a community and add a decorator that ensures that they are part of the community.
+
+42.  Create a decorator for confirm email address required.
+
+43.  Implement drafts and auto save.
+
+44.   Notify users when new articles are added to a community.
+
+45.  In the function save_relation_vote, prevent a malicious user from casting a vote for his own articles.
+
+46.  Notify users if anyone in their communities creates a new entry.
+
+47.  Notify users if a new entry has been added to any graph containing any entry they have saved in their library.
+
+48.  In user profile, users library too, add the ability to see how many articles point in, like go all the way back in the graph (out from that node to all that
+        point in and all that point out) and that point out.  Allow the ability to explore the graph out from a given article.  Add the ability to see only the latest 
+        additions.
+        
+49.  Set up filters on Community tags.
+
+50 Paginate and filter on users responses.
+
+51.  Markdown on private messages.
